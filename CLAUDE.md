@@ -42,6 +42,11 @@ npm run build    # 本番ビルド（dist/）
 npm run preview  # ビルド結果の確認
 ```
 
+## デプロイ情報
+
+- 本番URL：https://realestate-app-gvqm.vercel.app/
+- Supabaseプロジェクト名：realestate-app
+
 ## Git 運用ルール
 
 ### 基本方針: コードを変更するたびに GitHub へプッシュする
