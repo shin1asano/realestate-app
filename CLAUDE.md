@@ -4,23 +4,39 @@
 
 ## プロジェクト概要
 
-不動産アプリ（realestate-app）。
+不動産管理 Web アプリ（realestate-app）。Supabase 認証（メールアドレス＋パスワード）でログインし、物件一覧を表示する。
 
-<!-- TODO: アプリの目的・主な機能・想定ユーザーを記載 -->
+- `/login` ログイン、`/signup` 会員登録（ログイン済みなら `/properties` へ移動する）
+- `/properties` 物件一覧（ログインが必要。未ログインなら `/login` へリダイレクト）
+- 物件データは現在 [src/data/properties.js](src/data/properties.js) のダミーデータ
 
 ## 技術スタック
 
-<!-- TODO: 決まり次第記載（例: フロントエンド / バックエンド / DB / ホスティング） -->
+- React + Vite（JavaScript / JSX）
+- React Router（ルーティング）
+- Supabase（`@supabase/supabase-js`、認証）
+
+### 構成
+
+- [src/lib/supabase.js](src/lib/supabase.js) — Supabase クライアント
+- [src/contexts/AuthContext.jsx](src/contexts/AuthContext.jsx) — ログイン状態の管理（`useAuth`）
+- [src/components/ProtectedRoute.jsx](src/components/ProtectedRoute.jsx) — ログインが必要なページ・ゲスト向けページのガード
+- [src/pages/](src/pages/) — 各画面
+
+### 環境変数
+
+`.env`（Git 管理外）に設定する。テンプレートは `.env.example`。
+
+- `VITE_SUPABASE_URL` — Supabase の Project URL
+- `VITE_SUPABASE_PUBLISHABLE_KEY` — Supabase の Publishable key
 
 ## 開発コマンド
 
-<!-- TODO: セットアップ・起動・ビルド・テスト・Lint のコマンドを記載 -->
-
 ```bash
-# 例
-# npm install
-# npm run dev
-# npm test
+npm install      # 依存関係のインストール
+npm run dev      # 開発サーバー起動（http://localhost:5173）
+npm run build    # 本番ビルド（dist/）
+npm run preview  # ビルド結果の確認
 ```
 
 ## Git 運用ルール
@@ -64,7 +80,6 @@ git push origin <現在のブランチ>
 
 ## コーディング規約
 
-<!-- TODO: 命名規則・ディレクトリ構成・フォーマッタ設定などを記載 -->
-
 - 既存コードのスタイル・構成に合わせる。
 - 不要なファイルや未使用コードを残さない。
+- コード中のコメントは日本語で書く。
