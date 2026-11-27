@@ -7,18 +7,21 @@
 不動産管理 Web アプリ（realestate-app）。Supabase 認証（メールアドレス＋パスワード）でログインし、物件一覧を表示する。
 
 - `/login` ログイン、`/signup` 会員登録（ログイン済みなら `/properties` へ移動する）
-- `/properties` 物件一覧（ログインが必要。未ログインなら `/login` へリダイレクト）
-- 物件データは現在 [src/data/properties.js](src/data/properties.js) のダミーデータ
+- `/properties` 物件一覧・登録・編集・削除（ログインが必要。未ログインなら `/login` へリダイレクト）
+- 物件データは Supabase の `properties` テーブルに保存する。RLS により、各ユーザーは自分が登録した物件のみ表示・編集・削除できる
 
 ## 技術スタック
 
 - React + Vite（JavaScript / JSX）
 - React Router（ルーティング）
-- Supabase（`@supabase/supabase-js`、認証）
+- Supabase（`@supabase/supabase-js`、認証・データベース）
 
 ### 構成
 
 - [src/lib/supabase.js](src/lib/supabase.js) — Supabase クライアント
+- [src/lib/propertiesApi.js](src/lib/propertiesApi.js) — `properties` テーブルの CRUD 操作
+- [src/components/PropertyForm.jsx](src/components/PropertyForm.jsx) — 物件の登録・編集フォーム（共通）
+- [supabase/migrations/](supabase/migrations/) — テーブル・RLS ポリシーの SQL。スキーマを変更するときは新しい SQL ファイルを追加し、Supabase の SQL Editor で実行する
 - [src/contexts/AuthContext.jsx](src/contexts/AuthContext.jsx) — ログイン状態の管理（`useAuth`）
 - [src/components/ProtectedRoute.jsx](src/components/ProtectedRoute.jsx) — ログインが必要なページ・ゲスト向けページのガード
 - [src/pages/](src/pages/) — 各画面
